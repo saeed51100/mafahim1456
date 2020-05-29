@@ -15,13 +15,13 @@
     </div>
     <hr>
     @foreach($posts as $post)
-    <div class="row">
-        <div class="col-md-12">
-            <p><strong>{{ $post->title }}</strong>
-                <a href="{{ route('admin.edit', ['id' => $post->id]) }}">Edit</a>
-                <a href="{{ route('admin.delete', ['id' => $post->id]) }}">Delete</a>
-            </p>
+        <div class="row">
+            <div class="col-md-12">
+                <p><strong>{{ $post->title }}</strong>
+                    <a href="{{ route('admin.edit', ['id' => $post->id]) }}">Edit</a>
+                    <a href="{{ route('admin.delete', ['id' => $post->id]) }}">Delete</a>
+                </p>
+            </div>
         </div>
-    </div>
     @endforeach
 @endsection
