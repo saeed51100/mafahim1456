@@ -15,10 +15,10 @@ class AlwaysRedirect
      */
     public function handle($request, Closure $next)
     {
-        if ($request->path() == 'about') {
-            return redirect('/');
-
-        }
+//        if ($request->path() == 'about') {
+//            return redirect('/');
+//
+//        }
         return $next($request);
     }
 }
