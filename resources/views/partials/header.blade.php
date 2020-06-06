@@ -2,11 +2,11 @@
 {{--<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">--}}
 
 <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light flex-md-nowrap p-0 shadow">
-
     <a class="navbar-brand" href="{{ route('blog.index') }}">Laravel Guide</a>
 
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
-            data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+            aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -19,6 +19,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('other.about') }}">About</a>
             </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
             @if(!Auth::check())
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -30,25 +33,48 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.index') }}">Posts</a>
                 </li>
-                <li class="nav-item">
 
-                    <a class="nav-link" href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
+{{--            This code is commented and replace with below code: saeed doc  --}}
+
+                {{--                <li class="nav-item">--}}
+
+                {{--                    <a class="nav-link" href="{{ route('logout') }}"--}}
+                {{--                       onclick="event.preventDefault();--}}
+                {{--                                                     document.getElementById('logout-form').submit();">--}}
+                {{--                        {{ __('Logout') }}--}}
+                {{--                    </a>--}}
+
+                {{--                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">--}}
+                {{--                        @csrf--}}
+                {{--                    </form>--}}
+                {{--                </li>--}}
+{{--code below copied from php artisan ui bootstrap --auth created. saeed doc--}}
+
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }} <span class="caret"></span>
                     </a>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                              style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
                 </li>
+
             @endif
         </ul>
     </div>
+
 </nav>
-
-
-
 
 
 {{--------------------------------------------------}}
