@@ -12,8 +12,8 @@
 */
 
 Route::get('/', [
-    'uses' => 'PostController@getIndex',
-    'as' => 'blog.index'
+    'uses' => 'PostController@getRandPost',
+    'as' => 'blog.randpost'
 ]);
 
 Route::get('post/{id}', [

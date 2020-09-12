@@ -11,6 +11,13 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+
+    public function getRandPost()
+    {
+        $post = Post::inRandomOrder()->with('likes')->first();
+        return view('blog.post', ['post' => $post]);
+    }
+
     public function getIndex()
     {
         $posts = Post::orderBy('created_at', 'desc')->get();
