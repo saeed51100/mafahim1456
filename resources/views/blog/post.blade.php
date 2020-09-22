@@ -17,4 +17,17 @@
             <p>{{ $post->content }}</p>
         </div>
     </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <hr>
+    <p style="font-weight: bold">
+        @foreach($post->tags as $tag)
+            - {{ $tag->name }} -
+        @endforeach
+    </p>
 @endsection
