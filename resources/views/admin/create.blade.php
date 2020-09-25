@@ -3,6 +3,16 @@
 @section('content')
     @include('partials.errors')
     <div class="row">
+        <form action="/processUpload" enctype="multipart/form-data" method="POST">
+            @csrf
+            <p>
+                <label for="photo">
+                    <input type="file" name="photo" id="photo">
+                </label>
+            </p>
+            <button>UPLOAD</button>
+        </form>
+
         <div class="col-md-12">
             <form action="{{ route('admin.create') }}" method="post">
                 <div class="form-group">

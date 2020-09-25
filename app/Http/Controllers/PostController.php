@@ -12,6 +12,20 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
 
+    public function getPhoto(Request $request)
+    {
+
+        $validation = $request->validate([
+            "photo" => 'required | file | image | mimes:jpeg,png,gif,webp | max:1024'
+        ]);
+        $file = $request->file('photo');
+        $extension = $file->getClientOriginalExtension();
+        $filename = 'profile-photo-' . time() . '.' . $extension;
+        $path = $file->storeAs('photos', $filename);
+
+        dd($path);
+    }
+
     public function getRandPost()
     {
         $post = Post::inRandomOrder()->with('likes')->first();
