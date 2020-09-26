@@ -13,25 +13,6 @@
 
 
 
-//Route::post('processUpload', function (Request $request) {
-//    $validation = $request->validate([
-//        "photo" => 'required | file | image | mimes:jpeg,png,gif,webp | max:2048'
-//    ]);
-//    $file = $request->file('photo');
-//    $extension = $file->getClientOriginalExtension();
-//    $filename = 'profile-photo-' . time() . '.' . $extension;
-//    $path = $file->storeAs('photos', $filename);
-//
-//    dd($path);
-//});
-
-
-Route::post('processUpload',[
-    'uses' => 'PostController@getPhoto',
-    'as' => 'blog.post'
-]);
-
-
 Route::get('/', [
     'uses' => 'PostController@getRandPost',
     'as' => 'blog.randpost'

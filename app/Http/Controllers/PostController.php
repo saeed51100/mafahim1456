@@ -12,20 +12,6 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
 
-    public function getPhoto(Request $request)
-    {
-
-        $validation = $request->validate([
-            "photo" => 'required | file | image | mimes:jpeg,png,gif,webp | max:1024'
-        ]);
-        $file = $request->file('photo');
-        $extension = $file->getClientOriginalExtension();
-        $filename = 'profile-photo-' . time() . '.' . $extension;
-        $path = $file->storeAs('photos', $filename);
-
-        dd($path);
-    }
-
     public function getRandPost()
     {
         $post = Post::inRandomOrder()->with('likes')->first();
@@ -74,9 +60,14 @@ class PostController extends Controller
     public function postAdminCreate(Request $request)
     {
         $this->validate($request, [
+            "photo" => 'required | file | image | mimes:jpeg,png,gif,webp | max:1024',
             'title' => 'required|min:5',
             'content' => 'required|min:10'
         ]);
+        $file = $request->file('photo');
+        $extension = $file->getClientOriginalExtension();
+        $filename = 'profile-photo-' . time() . '.' . $extension;
+        $path = $file->storeAs('photos', $filename);
         $user = Auth::user();
         $post = new Post([
             'title' => $request->input('title'),
@@ -85,8 +76,10 @@ class PostController extends Controller
         $user->posts()->save($post);
         $user = Auth::user();
         $post->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
+//        dd($path);
 
         return redirect()->route('admin.index')->with('info', 'Post created, Title is: ' . $request->input('title'));
+
     }
 
     public function postAdminUpdate(Request $request)
