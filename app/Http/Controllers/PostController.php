@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Like;
 use App\Post;
 use App\Tag;
+use App\Image;
 use Auth;
 use Gate;
 use Illuminate\Http\Request;
@@ -41,7 +42,7 @@ class PostController extends Controller
         $post = Post::where('id', $id)->first();
         $like = new Like();
         $post->likes()->save($like);
-        return redirect()->back();
+        return redirect()->route('blog.post', $post->id);
     }
 
     public function getAdminCreate()
@@ -77,6 +78,17 @@ class PostController extends Controller
         $user = Auth::user();
         $post->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
 //        dd($path);
+
+
+        //        $popp = DB::table('posts')->get()->last();
+//        $bb = collect($popp)->get('id');
+//        dd($bb);
+
+//        $mm = Post::all()->last();
+//        $bb = collect($mm)->get('id');
+//        dd($bb);
+
+//        $pathToDelete = base_path() . '' . basename($post->featured);
 
         return redirect()->route('admin.index')->with('info', 'Post created, Title is: ' . $request->input('title'));
 
