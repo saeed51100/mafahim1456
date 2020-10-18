@@ -69,6 +69,8 @@ class PostController extends Controller
         $extension = $file->getClientOriginalExtension();
         $filename = 'profile-photo-' . time() . '.' . $extension;
         $path = $file->storeAs('photos', $filename);
+
+
         $user = Auth::user();
         $post = new Post([
             'title' => $request->input('title'),
