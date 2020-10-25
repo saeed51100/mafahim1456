@@ -9,6 +9,7 @@ use App\Image;
 use Auth;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -70,6 +71,7 @@ class PostController extends Controller
         $filename = 'profile-photo-' . time() . '.' . $extension;
         $path = $file->storeAs('photos', $filename);
 
+//        dd($path);
 
         $user = Auth::user();
         $post = new Post([
@@ -77,12 +79,19 @@ class PostController extends Controller
             'content' => $request->input('content')
         ]);
         $user->posts()->save($post);
-        $user = Auth::user();
+//        $user = Auth::user();
         $post->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
+
+        $image = new Image([
+            'imgname' => $filename
+        ]);
+        $post->images()->save($image);
+
+
 //        dd($path);
 
 
-        //        $popp = DB::table('posts')->get()->last();
+//        $popp = DB::table('posts')->get()->last();
 //        $bb = collect($popp)->get('id');
 //        dd($bb);
 
@@ -121,9 +130,23 @@ class PostController extends Controller
         if (Gate::denies('manipulate-post', $post)) {
             return redirect()->back();
         }
+
+
+        $mm = $post->images()->get();
+        $bb = collect($mm)->get('0');
+        $zz = collect($bb)->get('imgname');
+
+        $pathtodelete = 'photos/' . $zz;
+//        dd($pathtodelete);
+        Storage::delete($pathtodelete);
+
+
         $post->likes()->delete();
+        $post->images()->delete();
         $post->tags()->detach();
         $post->delete();
+
+
         return redirect()->route('admin.index')->with('info', 'Post deleted!');
     }
 }
