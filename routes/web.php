@@ -12,16 +12,18 @@
 */
 
 
+//Route::get('/', [
+//    'uses' => 'PostController@getRandPost',
+//    'as' => 'blog.randpost'
+//]);
 
-Route::get('/', [
-    'uses' => 'PostController@getRandPost',
-    'as' => 'blog.randpost'
-]);
+Route::view('/', 'other.about');
 
 Route::get('post/{id}', [
     'uses' => 'PostController@getPost',
     'as' => 'blog.post'
 ]);
+
 Route::get('post/{id}/like', [
     'uses' => 'PostController@getLikePost',
     'as' => 'blog.post.like'

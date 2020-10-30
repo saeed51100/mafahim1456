@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+use App\Image;
 use App\Post;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -25,7 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::share('posts', Post::orderBy('created_at', 'desc')->get());
+        View::share('posts', Post::orderBy('created_at', 'asc')->get());
+//        View::share('image', Image::orderBy('created_at', 'asc')->get());
+
 
     }
 }

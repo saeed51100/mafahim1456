@@ -10,15 +10,16 @@ use Auth;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use DB;
 
 class PostController extends Controller
 {
 
-    public function getRandPost()
-    {
-        $post = Post::inRandomOrder()->with('likes')->first();
-        return view('blog.post', ['post' => $post]);
-    }
+//    public function getRandPost()
+//    {
+//        $post = Post::inRandomOrder()->with('likes')->first();
+//        return view('blog.post', ['post' => $post]);
+//    }
 
     public function getIndex()
     {
@@ -35,6 +36,7 @@ class PostController extends Controller
     public function getPost($id)
     {
         $post = Post::where('id', $id)->with('likes')->first();
+
         return view('blog.post', ['post' => $post]);
     }
 
@@ -69,7 +71,7 @@ class PostController extends Controller
         $file = $request->file('photo');
         $extension = $file->getClientOriginalExtension();
         $filename = 'profile-photo-' . time() . '.' . $extension;
-        $path = $file->storeAs('photos', $filename);
+        $path = $file->storeAs('public', $filename);
 
 //        dd($path);
 
@@ -131,13 +133,15 @@ class PostController extends Controller
             return redirect()->back();
         }
 
-
+//
         $mm = $post->images()->get();
         $bb = collect($mm)->get('0');
         $zz = collect($bb)->get('imgname');
 
-        $pathtodelete = 'photos/' . $zz;
+
+        $pathtodelete = 'public/' . $zz;
 //        dd($pathtodelete);
+
         Storage::delete($pathtodelete);
 
 
