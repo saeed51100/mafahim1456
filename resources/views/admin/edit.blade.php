@@ -4,7 +4,18 @@
     @include('partials.errors')
     <div class="row">
         <div class="col-md-12">
-            <form action="{{ route('admin.update') }}" method="post">
+            <form action="{{ route('admin.update') }}" enctype="multipart/form-data" method="post">
+
+                @if($imgname = $post->images->pluck('imgname')->first()) @endif
+                {{--    @dd($imgname)--}}
+                <img src="/storage/{{$imgname}}" alt="profile Pic" height="200" width="300">
+
+                <p>
+                    <label for="photo">
+                        <input type="file" name="photo" id="photo">
+                    </label>
+                </p>
+
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input

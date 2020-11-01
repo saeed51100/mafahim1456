@@ -6,6 +6,7 @@
         <div class="col-md-12">
             <form action="{{ route('admin.create') }}" enctype="multipart/form-data" method="post">
                 <p>
+
                     <label for="photo">
                         <input type="file" name="photo" id="photo">
                     </label>

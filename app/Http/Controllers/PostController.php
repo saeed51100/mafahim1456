@@ -110,16 +110,45 @@ class PostController extends Controller
     public function postAdminUpdate(Request $request)
     {
         $this->validate($request, [
+            "photo" => 'required | file | image | mimes:jpeg,png,gif,webp | max:1024',
             'title' => 'required|min:5',
             'content' => 'required|min:10'
         ]);
+
+
         $post = Post::find($request->input('id'));
         if (Gate::denies('manipulate-post', $post)) {
             return redirect()->back();
         }
+
+
         $post->title = $request->input('title');
         $post->content = $request->input('content');
         $post->save();
+
+        $zz = $post->images->pluck('imgname')->first();
+        $pathtodelete = 'public/' . $zz;
+        Storage::delete($pathtodelete);
+        $post->images()->delete();
+
+
+
+
+        $file = $request->file('photo');
+        $extension = $file->getClientOriginalExtension();
+        $filename = 'profile-photo-' . time() . '.' . $extension;
+        $path = $file->storeAs('public', $filename);
+
+
+
+
+        $image = new Image([
+            'imgname' => $filename
+        ]);
+        $post->images()->save($image);
+
+
+
 //        $post->tags()->detach();
 //        $post->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
         $post->tags()->sync($request->input('tags') === null ? [] : $request->input('tags'));
@@ -134,12 +163,15 @@ class PostController extends Controller
         }
 
 //
-        $mm = $post->images()->get();
-        $bb = collect($mm)->get('0');
-        $zz = collect($bb)->get('imgname');
+//        $mm = $post->images()->get();
+//        $bb = collect($mm)->get('0');
+//        $zz = collect($bb)->get('imgname');
 
+        $zz = $post->images->pluck('imgname')->first();
 
         $pathtodelete = 'public/' . $zz;
+
+
 //        dd($pathtodelete);
 
         Storage::delete($pathtodelete);
