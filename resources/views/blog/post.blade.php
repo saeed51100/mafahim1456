@@ -12,7 +12,7 @@
     {{--        @if ($imgname = (collect((collect($post->images))->get('0')))->get('imgname')) @endif--}}
 
     @if($imgname = $post->images->pluck('imgname')->first()) @endif
-    {{--    @dd($imgname)--}}
+{{--        @dd($imgname)--}}
 
 
     <img src="/storage/{{$imgname}}" alt="profile Pic" height="200" width="780">

@@ -8,7 +8,7 @@
 
                 @if($imgname = $post->images->pluck('imgname')->first()) @endif
                 {{--    @dd($imgname)--}}
-                <img src="/storage/{{$imgname}}" alt="profile Pic" height="200" width="300">
+                <img src="/storage/{{$imgname}}" alt="profile Pic" height="200" width="250">
 
                 <p>
                     <label for="photo">

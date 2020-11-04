@@ -33,10 +33,17 @@
 
 </head>
 <body>
+
+
+<script src="{{ asset('js/app.js') }}"></script>
+
+
 @include('partials.header')
 {{--<div class="container">--}}
 {{--    @yield('content')--}}
 {{--</div>--}}
+
+
 
 <div class="container-fluid">
     <div class="row">
@@ -71,7 +78,6 @@
 </div>
 
 
-<script src="{{ asset('js/app.js') }}"></script>
 
 </body>
 </html>

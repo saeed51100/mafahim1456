@@ -68,21 +68,25 @@ class PostController extends Controller
             'title' => 'required|min:5',
             'content' => 'required|min:10'
         ]);
-        $file = $request->file('photo');
-        $extension = $file->getClientOriginalExtension();
-        $filename = 'profile-photo-' . time() . '.' . $extension;
-        $path = $file->storeAs('public', $filename);
 
-//        dd($path);
 
         $user = Auth::user();
         $post = new Post([
             'title' => $request->input('title'),
             'content' => $request->input('content')
         ]);
+
+        $file = $request->file('photo');
+        $extension = $file->getClientOriginalExtension();
+        $filename = 'profile-photo-' . time() . '.' . $extension;
+        $path = $file->storeAs('public', $filename);
+
+//        dd($zz);
+
         $user->posts()->save($post);
 //        $user = Auth::user();
         $post->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
+
 
         $image = new Image([
             'imgname' => $filename
@@ -132,21 +136,16 @@ class PostController extends Controller
         $post->images()->delete();
 
 
-
-
         $file = $request->file('photo');
         $extension = $file->getClientOriginalExtension();
         $filename = 'profile-photo-' . time() . '.' . $extension;
         $path = $file->storeAs('public', $filename);
 
 
-
-
         $image = new Image([
             'imgname' => $filename
         ]);
         $post->images()->save($image);
-
 
 
 //        $post->tags()->detach();

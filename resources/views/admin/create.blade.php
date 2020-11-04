@@ -7,9 +7,29 @@
             <form action="{{ route('admin.create') }}" enctype="multipart/form-data" method="post">
                 <p>
 
-                    <label for="photo">
-                        <input type="file" name="photo" id="photo">
-                    </label>
+                    <input type='file' name="photo" id="photo"/>
+                    <img id="blah" src="#" alt="your image " height="100" width="120">
+
+                    <script>
+                        function readURL(input) {
+                            if (input.files && input.files[0]) {
+                                var reader = new FileReader();
+
+                                reader.onload = function (e) {
+                                    $('#blah').attr('src', e.target.result);
+                                }
+
+                                reader.readAsDataURL(input.files[0]); // convert to base64 string
+                            }
+                        }
+
+                        $("#photo").change(function () {
+                            readURL(this);
+                        });
+
+                    </script>
+
+
                 </p>
                 <br>
                 <br>
@@ -33,6 +53,8 @@
                 {{ csrf_field() }}
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+
+
         </div>
     </div>
 @endsection
