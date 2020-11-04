@@ -7,13 +7,31 @@
             <form action="{{ route('admin.update') }}" enctype="multipart/form-data" method="post">
 
                 @if($imgname = $post->images->pluck('imgname')->first()) @endif
-                {{--    @dd($imgname)--}}
-                <img src="/storage/{{$imgname}}" alt="profile Pic" height="200" width="250">
 
                 <p>
-                    <label for="photo">
-                        <input type="file" name="photo" id="photo">
-                    </label>
+                    <input type='file' name="photo" id="photo"/>
+                    <img id="blah" src="#" onerror="this.src='/storage/{{$imgname}}'" alt="your image " height="100"
+                         width="120">
+
+
+                    <script>
+                        function readURL(input) {
+                            if (input.files && input.files[0]) {
+                                var reader = new FileReader();
+
+                                reader.onload = function (e) {
+                                    $('#blah').attr('src', e.target.result);
+                                }
+
+                                reader.readAsDataURL(input.files[0]); // convert to base64 string
+                            }
+                        }
+
+                        $("#photo").change(function () {
+                            readURL(this);
+                        });
+
+                    </script>
                 </p>
 
                 <div class="form-group">

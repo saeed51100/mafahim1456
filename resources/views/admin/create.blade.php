@@ -10,6 +10,7 @@
                     <input type='file' name="photo" id="photo"/>
                     <img id="blah" src="#" alt="your image " height="100" width="120">
 
+
                     <script>
                         function readURL(input) {
                             if (input.files && input.files[0]) {
